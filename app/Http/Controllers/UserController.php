@@ -23,7 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -34,7 +34,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fname = $request->get('first_name');
+        dd($request->all());
+        echo $fname;
     }
 
     /**
@@ -80,5 +82,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function test($ali=null){
+        echo $ali;
     }
 }

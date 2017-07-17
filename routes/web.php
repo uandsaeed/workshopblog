@@ -11,12 +11,14 @@
 |
 */
 use \App\Http\Controllers\HomeController;
+use \App\Http\Controllers\UserController;
 
 Route::group(['public'],function (){
 
-    /*Route::group(['Users'], function () {
-        Route::resourse('users',HomeController::class);
-    });*/
+    Route::group(['Users'], function () {
+        Route::resource('users',"UserController");
+        Route::get('test/{id?}',['as' => 'test', 'uses' => "UserController@test"]);
+    });
 });
 
 Route::group(['private'],function (){
