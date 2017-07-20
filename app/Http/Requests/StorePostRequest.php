@@ -24,9 +24,10 @@ class StorePostRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required',
-            'form_id' => 'required',
-            'status' => 'required',
+            'title' => 'required',
+            'category' => 'required',
+            'photo' => 'required',
+            'description' => 'required',
         ];
     }
 
@@ -36,7 +37,7 @@ class StorePostRequest extends Request
     public function messages()
     {
         return [
-            'name.required' => 'Please select "Type of Ad"'
+            'title.required' => 'Please select "Title"'
         ];
     }
 }

@@ -27,9 +27,9 @@
             <div class="form-group">
                 <label class="col-xs-5 control-label asterisk">Category:</label>
                 <select id="category" name="category" class="form-control">
-
+                    <option value="">Select Category</option>
                     @foreach(category_drop_down() as $Categories)
-                        <option value="{{$Categories->name}}"  selected="selected" >{{$Categories->name}}</option>
+                        <option value="{{$Categories->name}}" >{{$Categories->name}}</option>
                     @endforeach
 
                 </select>
