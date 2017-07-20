@@ -22,30 +22,16 @@
 <div class="well">
 <h4>Blog Categories</h4>
 <div class="row">
-<div class="col-lg-6">
+<div class="col-lg-12">
+    @foreach($categories as $category)
+        <article class="categories" data-categoryid="{{ $category->id }}">
 <ul class="list-unstyled">
-<li><a href="#">Category Name</a>
-</li>
-<li><a href="#">Category Name</a>
-</li>
-<li><a href="#">Category Name</a>
-</li>
-<li><a href="#">Category Name</a>
-</li>
+    <li>{{$category->name}}</li>
 </ul>
+        </article>
+        @endforeach
 </div>
-<div class="col-lg-6">
-<ul class="list-unstyled">
-<li><a href="#">Category Name</a>
-</li>
-<li><a href="#">Category Name</a>
-</li>
-<li><a href="#">Category Name</a>
-</li>
-<li><a href="#">Category Name</a>
-</li>
-</ul>
-</div>
+
 </div>
 <!-- /.row -->
 </div>

@@ -27,7 +27,16 @@ Route::group(['public'],function (){
         Route::post('/delete-post/{post_id}', ['uses' => 'PostController@getDeletePost', 'as' => 'post.delete']);
         Route::post('/edit', ['uses' => 'PostController@postEditPost', 'as' => 'edit']);
         Route::post('/like', ['uses' => 'PostController@postLikePost', 'as' => 'like']);
+
+
     });
+
+    Route::group(['Categories'], function () {
+
+        Route::get('/category', ['uses' => 'PostController@category', 'as' => 'category', ]);
+        Route::post('/createcategory', ['uses' => 'PostController@createCatagory', 'as' => 'createcategory', ]);
+    });
+
 });
 
 Route::group(['private'],function (){
@@ -44,6 +53,8 @@ Route::get('/','HomeController@index');
 Route::get('post', function () {
     return view('home.Post');
 });
+
+
 //Route::get('/', function () {
 //    return view('home.index');
 //});
