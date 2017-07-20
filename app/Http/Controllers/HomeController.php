@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Category;
 use app\Http\Requests\Request;
 use App\Post;
 
@@ -31,8 +32,9 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(){
+        $categories= Category::all();
         $posts = $this->post->fetchPosts();
-        return view('home.index',['posts' => $posts]);
+        return view('home.index',['posts' => $posts,'categories' => $categories]);
     }
 
     public function searchPosts(Request $request){

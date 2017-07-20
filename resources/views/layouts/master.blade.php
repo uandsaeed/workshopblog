@@ -46,6 +46,9 @@
                 </li><li>
                     <a href="{{route('create')}}">Create Post</a>
                 </li>
+                <li>
+                    <a href="{{route('category')}}">Catogry</a>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
