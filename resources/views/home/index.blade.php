@@ -25,7 +25,7 @@
     <img class="img-responsive" src='assets/images/{{ $post->photo }}' alt="">
     <hr>
     <p>{{ $post->description }}</p>
-    {{--<a class="btn btn-primary" href="post">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>--}}
+    <a class="btn btn-primary" href="post">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
     <hr>
      </article>
