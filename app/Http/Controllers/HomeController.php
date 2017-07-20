@@ -9,11 +9,21 @@
 namespace App\Http\Controllers;
 
 
+use App\Post;
+
 class HomeController extends Controller
 {
 
     public function index(){
-        $world = "Students Of Batch I";
-        return view('home.index', compact('world'));
+
+        $posts = Post::orderBy('created_at', 'desc')->get();
+        return view('home.index',['posts' => $posts]);
+
+
+        //        $world = "Students Of Batch I";
+//        return view('home.index', compact('world'));
+
     }
+
+
 }

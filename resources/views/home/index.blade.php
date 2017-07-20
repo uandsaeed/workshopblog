@@ -1,70 +1,44 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+@extends('layouts.master')
+@section('pageContent')
+    <!-- Blog Entries Column -->
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-    <!-- Styles -->
-    <style>
-        html, body {
-            background-color: #fff;
-            color: #636b6f;
-            font-family: 'Raleway', sans-serif;
-            font-weight: 100;
-            height: 100vh;
-            margin: 0;
-        }
 
-        .full-height {
-            height: 100vh;
-        }
+    <div class="col-md-8">
 
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
+    <h1 class="page-header">
+        Page Heading
+        <small>Secondary Text</small>
+    </h1>
+        @foreach($posts as $post)
+            <article class="post" data-postid="{{ $post->id }}"></art
+    <!-- First Blog Post -->
+    <h2>
+        <a href="#">{{ $post->title }}{{ $post->category }}</a>
+    </h2>
+    <p class="lead">
+        by <a href="#"> {{ $post->user->name }}</a>
+    </p>
+    <p><span class="glyphicon glyphicon-time"></span> Posted on {{ $post->created_at }}</p>
+    <hr>
+    <img class="img-responsive" src='assets/images/{{ $post->photo }}' alt="">
+    <hr>
+    <p>{{ $post->description }}</p>
+    {{--<a class="btn btn-primary" href="post">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>--}}
 
-        .position-ref {
-            position: relative;
-        }
+    <hr>
+     </article>
+  @endforeach
+     <!-- Pager -->
+    <ul class="pager">
+        <li class="previous">
+            <a href="#">&larr; Older</a>
+        </li>
+        <li class="next">
+            <a href="#">Newer &rarr;</a>
+        </li>
+    </ul>
 
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 84px;
-        }
-
-        .links > a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .m-b-md {
-            margin-bottom: 30px;
-        }
-    </style>
-</head>
-<body>
-<h1>Hello, {{$world}}</h1>
-</body>
-</html>
+</div>
+@stop

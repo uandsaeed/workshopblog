@@ -19,15 +19,31 @@ Route::group(['public'],function (){
         Route::resource('users',"UserController");
         Route::get('test/{id?}',['as' => 'test', 'uses' => "UserController@test"]);
     });
+    Route::group(['Posts'], function () {
+        Route::resource('posts',"PostController");
+        Route::get('/create', ['uses' => 'PostController@index', 'as' => 'create', ]);
+        Route::post('/createpost', ['uses' => 'PostController@postCreatePost', 'as' => 'createpost', ]);
+        Route::post('/delete-post/{post_id}', ['uses' => 'PostController@getDeletePost', 'as' => 'post.delete']);
+        Route::post('/edit', ['uses' => 'PostController@postEditPost', 'as' => 'edit']);
+        Route::post('/like', ['uses' => 'PostController@postLikePost', 'as' => 'like']);
+    });
 });
 
 Route::group(['private'],function (){
 
 });
 //$route = new Route();
-Route::get('abc',['as' => 'ali', 'uses' => "HomeController@index"]);
+//Route::get('/',['as' => '/', 'uses' => "HomeController@index"]);
 
+Route::get('/','HomeController@index');
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('post', function () {
+    return view('home.Post');
 });
+//Route::get('/', function () {
+//    return view('home.index');
+//});
+
