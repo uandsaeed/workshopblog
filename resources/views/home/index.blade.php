@@ -12,7 +12,7 @@
         <small>Secondary Text</small>
     </h1>
         @foreach($posts as $post)
-            <article class="post" data-postid="{{ $post->id }}"></art
+            <article class="post" data-postid="{{ $post->id }}">
     <!-- First Blog Post -->
     <h2>
         <a href="#">{{ $post->title }}{{ $post->category }}</a>
