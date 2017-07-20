@@ -9,20 +9,38 @@
 namespace App\Http\Controllers;
 
 
+use app\Http\Requests\Request;
 use App\Post;
 
 class HomeController extends Controller
 {
 
+    private $post;
+
+    /**
+     * HomeController constructor.
+     * @param $post
+     */
+    public function __construct(Post $post)
+    {
+        $this->post = $post;
+    }
+
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(){
-
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = $this->post->fetchPosts();
         return view('home.index',['posts' => $posts]);
+    }
 
-
-        //        $world = "Students Of Batch I";
-//        return view('home.index', compact('world'));
-
+    public function searchPosts(Request $request){
+        $searchKey = $request->get('searchKey',null);
+        $posts = null;
+        $params['searchKey'] = $searchKey;
+        $posts = $this->post->fetchPosts($params);
+        return view('home.index',['posts' => $posts]);
     }
 
 

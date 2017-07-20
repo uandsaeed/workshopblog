@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    const LIMIT = 50;
     protected $fillable = [
         'title', 'category', 'photo', 'description'
     ];
@@ -59,5 +60,20 @@ class Post extends Model
         $posts->save();
         $response = ['success'=>true, 'error'=> false, 'message'=> 'Posts has been saved successfully!','Post'=>$posts];
         return $response;
+    }
+
+    /**
+     * @param array $params
+     */
+    function fetchPosts($params =array()){
+        $limit = isset($params['limit']) ? $params['limit'] : self::LIMIT;
+
+        $qry = self::select('id','title','user_id','photo','description','created_at');
+        if(isset($params['searchKey'])){
+            $qry->where('title','LIKE' , '%'.$params['searchKey'].'%');
+        }
+        $qry->orderBy('created_at', 'desc');
+//        dd($qry->toSql());
+        return $qry->paginate($limit);
     }
 }
