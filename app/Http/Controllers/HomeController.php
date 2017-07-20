@@ -5,13 +5,12 @@
  * Date: 7/15/2017
  * Time: 9:00 PM
  */
-
 namespace App\Http\Controllers;
 
 
-use app\Http\Requests\Request;
+//use App\Http\Requests\Request;
+use Illuminate\Http\Request;
 use App\Post;
-
 class HomeController extends Controller
 {
 
@@ -36,6 +35,7 @@ class HomeController extends Controller
     }
 
     public function searchPosts(Request $request){
+
         $searchKey = $request->get('searchKey',null);
         $posts = null;
         $params['searchKey'] = $searchKey;

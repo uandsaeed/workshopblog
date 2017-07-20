@@ -5,12 +5,15 @@
 <div class="well">
 <h4>Blog Search</h4>
 <div class="input-group">
-<input type="text" class="form-control">
-<span class="input-group-btn">
-<button class="btn btn-default" type="button">
-<span class="glyphicon glyphicon-search"></span>
-</button>
-</span>
+    <form action="{{route('results')}}" method="post">
+        <input type="text" class="form-control" name="searchKey">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">
+        <span class="glyphicon glyphicon-search"></span>
+        </button>
+        </span>
+    </form>
 </div>
 <!-- /.input-group -->
 </div>

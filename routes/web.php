@@ -21,6 +21,7 @@ Route::group(['public'],function (){
     });
     Route::group(['Posts'], function () {
         Route::resource('posts',"PostController");
+        Route::post('/results', ['uses' => 'HomeController@searchPosts', 'as' => 'results' ]);
         Route::get('/create', ['uses' => 'PostController@index', 'as' => 'create', ]);
         Route::post('/createpost', ['uses' => 'PostController@postCreatePost', 'as' => 'createpost', ]);
         Route::post('/delete-post/{post_id}', ['uses' => 'PostController@getDeletePost', 'as' => 'post.delete']);
