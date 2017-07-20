@@ -24,46 +24,40 @@ class Post extends Model
         'category' => 'required',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function likes()
     {
         return $this->hasMany(Like::class);
     }
 
+    /**
+     * @param $data
+     * @return array
+     */
     public static function savePost($data){
-
-        $vRules = Post::$rules;
-//            $id = isset($data['id']) ? $data['id'] : '';
-//            if($id != ''){
-//                $posts = Post::find($id);
-//            }else{
-//                return $response = ['success'=>false, 'error'=> true, 'message' => ' record did not find for updation! '];
-//            }
-
-//        //*****Start Rules Validators
-//        $validator = Validator::make($data, $vRules);
-//        if ($validator->fails())
-//        {
-//            return ['success'=>false, 'error'=> true, 'validatorErrors'=>$validator->errors()];
-//        }
-        //*****End Rules Validators
-
-        $posts = new Post();
-
+        $post = null;
+        if(isset($data['id'])){
+            /** @var TYPE_NAME $this */
+            $post = self::find($data['id']);
+        }else{
+            $posts = new Post();
+        }
         $posts->title = $data['title'];
-        $posts->category      = $data['category'];
-        $posts->photo  = $data['photo'];
-        $posts->description   = $data['description'];
-
-
+        $posts->category = $data['category'];
+        $posts->photo = $data['photo'];
+        $posts->description = $data['description'];
         $posts->save();
-
-
-        $response = ['success'=>true, 'error'=> false, 'message'=> 'Posts has been saved successfully!'];
+        $response = ['success'=>true, 'error'=> false, 'message'=> 'Posts has been saved successfully!','Post'=>$posts];
         return $response;
     }
 }
