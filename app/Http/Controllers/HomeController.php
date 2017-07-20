@@ -30,9 +30,8 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(){
-        $categories= Category::all();
         $posts = $this->post->fetchPosts();
-        return view('home.index',['posts' => $posts,'categories' => $categories]);
+        return view('home.index',['posts' => $posts]);
     }
 
     public function searchPosts(Request $request){

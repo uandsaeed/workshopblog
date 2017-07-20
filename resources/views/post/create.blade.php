@@ -18,6 +18,8 @@
         <form id="frmPost" method="post" action="{{route('createpost')}}">
             {{csrf_field()}}
 
+            <input type="hidden" id="user_id" name="user_id" value="1" class="form-control" >
+
             <div class="form-group">
                 <label for="pwd">Title:</label>
                 <input type="text" id="title" name="title"  class="form-control" >

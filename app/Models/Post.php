@@ -53,6 +53,7 @@ class Post extends Model
         }else{
             $posts = new Post();
         }
+        $posts->user_id = $data['user_id'];
         $posts->title = $data['title'];
         $posts->category = $data['category'];
         $posts->photo = $data['photo'];
