@@ -8,7 +8,7 @@ class Post extends Model
 {
     const LIMIT = 50;
     protected $fillable = [
-        'title', 'category', 'photo', 'description'
+        'title', 'category', 'photo', 'description', 'user_id'
     ];
 
     /**
@@ -45,21 +45,21 @@ class Post extends Model
      * @param $data
      * @return array
      */
-    public static function savePost($data){
+    public function savePost(array $data){
         $post = null;
         if(isset($data['id'])){
             /** @var TYPE_NAME $this */
             $post = self::find($data['id']);
         }else{
-            $posts = new Post();
+            $post = new Post();
         }
-        $posts->user_id = $data['user_id'];
-        $posts->title = $data['title'];
-        $posts->category = $data['category'];
-        $posts->photo = $data['photo'];
-        $posts->description = $data['description'];
-        $posts->save();
-        $response = ['success'=>true, 'error'=> false, 'message'=> 'Posts has been saved successfully!','Post'=>$posts];
+        $post->user_id = $data['user_id'];
+        $post->title = $data['title'];
+        $post->category = $data['category'];
+        $post->photo = $data['photo'];
+        $post->description = $data['description'];
+        $post->save();
+        $response = ['success'=>true, 'error'=> false, 'message'=> 'Posts has been saved successfully!','Post'=>$post];
         return $response;
     }
 

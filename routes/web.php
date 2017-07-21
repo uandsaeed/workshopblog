@@ -19,6 +19,7 @@ Route::group(['public'],function (){
         Route::resource('users',"UserController");
         Route::get('test/{id?}',['as' => 'test', 'uses' => "UserController@test"]);
     });
+
     Route::group(['Posts'], function () {
         Route::resource('posts',"PostController");
         Route::post('/results', ['uses' => 'HomeController@searchPosts', 'as' => 'results' ]);
