@@ -25,4 +25,8 @@ class Category extends Model
         $response = ['success'=>true, 'error'=> false, 'message'=> 'Posts has been saved successfully!','Post'=>$category];
         return $response;
     }
+
+    public function posts(){
+        return $this->belongsToMany(Post::class);
+    }
 }

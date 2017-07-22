@@ -77,4 +77,9 @@ class Post extends Model
 //        dd($qry->toSql());
         return $qry->paginate($limit);
     }
+
+    public function categories(){
+//        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class,'categories_posts');
+    }
 }

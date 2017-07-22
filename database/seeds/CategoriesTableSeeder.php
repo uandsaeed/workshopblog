@@ -13,13 +13,11 @@ class CategoriesTableSeeder extends Seeder
     {
         \App\Category::truncate();
         \App\Category::insert([
-
             ['name' => 'Happy',],
             ['name' => 'Sad',],
             ['name' => 'Traveling',],
             ['name' => 'Tired',],
             ['name' => 'Romantic',],
-
         ]);
 
     }

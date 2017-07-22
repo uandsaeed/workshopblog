@@ -11,11 +11,35 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
+        \Illuminate\Support\Facades\DB::table('categories_posts')->truncate();
         \App\Post::truncate();
-        \App\Post::insert([
 
-            ['id' => '1','user_id' => '1','title' => 'Welcome','category' => 'Happy','photo' => '1.jpg','description' => 'Good Morning','created_at' => '2017-07-07 09:24:08',],
-
+        $catIds = array(1,2,);
+        $posts = \App\Post::create([
+            'user_id' => '1',
+            'title' => 'Welcome',
+            'photo' => '1.jpg',
+            'description' => 'This is our first Post for testing'
         ]);
+        $posts->categories()->sync($catIds);
+
+        $catIds = array(3,4);
+        $posts = \App\Post::create([
+            'user_id' => '1',
+            'title' => 'Welcome 2',
+            'photo' => '1.jpg',
+            'description' => 'hjfl hsf lsdjhf sdfldldhf sdflhsdfsdhfldslkf hdslfsd'
+        ]);
+        $posts->categories()->sync($catIds);
+
+
+        $catIds = array(1,2,3,4);
+        $posts = \App\Post::create([
+            'user_id' => '1',
+            'title' => 'Welcome 3',
+            'photo' => '1.jpg',
+            'description' => 'dassafsdfdsdfljsdf lsjd dhsf sdlfhoisd foshdfsdlif odsfohsdfli dsfhpsd fip dsfijsd'
+        ]);
+        $posts->categories()->sync($catIds);
     }
 }

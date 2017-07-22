@@ -11,25 +11,40 @@
         Page Heading
         <small>Secondary Text</small>
     </h1>
+        @if($posts)
         @foreach($posts as $post)
             <article class="post" data-postid="{{ $post->id }}">
-    <!-- First Blog Post -->
-    <h2>
-        <a href="#">{{ $post->title }}{{ $post->category }}</a>
-    </h2>
-    <p class="lead">
-        by <a href="#"> {{ $post->user->name }}</a>
-    </p>
-    <p><span class="glyphicon glyphicon-time"></span> Posted on {{ $post->created_at }}</p>
-    <hr>
-    <img class="img-responsive" src='assets/images/{{ $post->photo }}' alt="">
-    <hr>
-    <p>{{ $post->description }}</p>
-    <a class="btn btn-primary" href="post">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <!-- First Blog Post -->
+            <h2>
+                <a href="#">{{ $post->title }}
 
-    <hr>
-     </article>
-  @endforeach
+                <?php
+                $categories = $post->categories()->where('name','=','Happy')->get();
+                ?>
+                @if($categories)
+                    @if($categories->count())
+                        @foreach($categories as $c)
+                            {{ $c->name }},
+                        @endforeach
+                    @endif
+                @endif
+
+                </a>
+            </h2>
+            <p class="lead">
+                by <a href="#"> {{ $post->user->name }}</a>
+            </p>
+            <p><span class="glyphicon glyphicon-time"></span> Posted on {{ $post->created_at }}</p>
+            <hr>
+            <img class="img-responsive" src='assets/images/{{ $post->photo }}' alt="">
+            <hr>
+            <p>{{ $post->description }}</p>
+            <a class="btn btn-primary" href="post">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+            <hr>
+             </article>
+          @endforeach
+    @endif
      <!-- Pager -->
     <ul class="pager">
         <li class="previous">
