@@ -6,7 +6,7 @@
  * Time: 1:21 PM
  */
 
-use \App\Category;
+use \App\Models\Category;
 
 function category_drop_down() {
     $categories = Category::all();

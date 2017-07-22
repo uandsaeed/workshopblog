@@ -8,9 +8,10 @@
 namespace App\Http\Controllers;
 
 
-use App\Category;
+use App\Models\Category;
 use app\Http\Requests\Request;
-use App\Post;
+use App\Models\Post;
+
 class HomeController extends Controller
 {
 
