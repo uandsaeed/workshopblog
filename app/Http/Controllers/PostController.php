@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\Models\Category;
 use App\Http\Requests\CatagoryRequest;
 use App\Http\Requests\StorePostRequest;
-use App\Post;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -25,13 +25,13 @@ class PostController extends Controller
 
 
     public function index(Request $request) {
-        $posts = 'All post will be shown here';
+        $posts = Post::all();
         $message = null;
         if($request->session()->has('message')){
             $message = $request->get('message',null);
 //            dd($message);
         }
-        return view('post.index', compact('posts','message'));
+        return view('home.index', compact('posts','message'));
     }
 
     public function create() {
@@ -51,27 +51,42 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+            if($data['image']) {
+                $file = $data['image'];
+                //saving image in public/assets/images folder with its extension
+                $pathToSaveImage = public_path().'/assets/images/';
+                $fileOriginalNameDetailArray = pathinfo($file->getClientOriginalName());
+                $fileName = time() . "_" . rand(1, 1000) . "." . $fileOriginalNameDetailArray['extension'];
+                $file->move($pathToSaveImage, $fileName);
+
+                $data['image']=$fileName;
+            }
         $this->post->savePost($data);
-        return redirect()->route('posts.index')->with('message','Post has been save successfully!');
+        return redirect()->route('home.index')->with('message','Post has been save successfully!');
     }
 
     public function update(Request $request, $id){
         $data = $request->all();
+        if (isset($data['image']) && count($data['image']) > 0) {
+            if($data['image']) {
+                $file = $data['image'];
+
+                //saving image in public/assets/images folder with its extension
+                $pathToSaveImage = public_path().'/assets/images/';
+                $fileOriginalNameDetailArray = pathinfo($file->getClientOriginalName());
+                $fileName = time() . "_" . rand(1, 1000) . "." . $fileOriginalNameDetailArray['extension'];
+                $file->move($pathToSaveImage, $fileName);
+
+                $data['image']=$fileName;
+            }
+        }
         $data['id'] = $id;
         $this->post->savePost($data);
-        return redirect()->route('posts.index')->with('message','Post has been save successfully!');
+        return redirect()->route('home.index')->with('message','Post has been save successfully!');
     }
 
     public function category() {
         return view('home.category');
-    }
-
-    public function postCreatePost(StorePostRequest $request)
-    {
-        $data = $request->all();
-        $response = Post::savePost($data);
-        return View('post.create', compact('response'));
-
     }
 
     public function createCatagory(CatagoryRequest $request)
@@ -80,5 +95,15 @@ class PostController extends Controller
         $response = Category::saveCategory($data);
         return View('home.category', compact('response'));
 
+    }
+
+    public function show($post_id) {
+        $post = Post::where('id', $post_id)->first();
+        return View('post.index',  ['post' => $post]);
+    }
+
+    public function delete($post_id) {
+        $this->post->deletePost($post_id);
+        return redirect()->route('home.index')->with('message','Post has been save successfully!');
     }
 }

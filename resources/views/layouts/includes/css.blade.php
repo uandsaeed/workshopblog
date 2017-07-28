@@ -12,4 +12,8 @@
         width: 100%;
 
     }
+    #post_photo {
+        height: 100px;
+        width: 100px;
+    }
 </style>

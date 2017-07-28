@@ -16,10 +16,12 @@
             <article class="post" data-postid="{{ $post->id }}">
             <!-- First Blog Post -->
             <h2>
-                <a href="#">{{ $post->title }}
+                <a href="{{ route('show', ['post_id' => $post->id]) }}">{{ $post->title }}
 
                 <?php
-                $categories = $post->categories()->where('name','=','Happy')->get();
+//                $categories = $post->categories()->where('name','=','Happy')->get();
+                $categories = $post->categories()->get();
+//                        dd($categories);
                 ?>
                 @if($categories)
                     @if($categories->count())
@@ -39,7 +41,7 @@
             <img class="img-responsive" src='assets/images/{{ $post->photo }}' alt="">
             <hr>
             <p>{{ $post->description }}</p>
-            <a class="btn btn-primary" href="post">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a class="btn btn-primary" href="{{ route('show', ['post_id' => $post->id]) }}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
             <hr>
              </article>

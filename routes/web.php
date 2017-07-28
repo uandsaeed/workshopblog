@@ -15,19 +15,24 @@ use \App\Http\Controllers\UserController;
 
 Route::group(['public'],function (){
 
+    Route::group(['Home'], function () {
+        Route::resource('home',"HomeController");
+    });
+
     Route::group(['Users'], function () {
         Route::resource('users',"UserController");
         Route::get('test/{id?}',['as' => 'test', 'uses' => "UserController@test"]);
+        Route::any('uploadProfilePic', array('as' => 'uploadProfilePic', 'uses' => 'UsersController@uploadProfilePic'));
     });
 
     Route::group(['Posts'], function () {
         Route::resource('posts',"PostController");
         Route::post('/results', ['uses' => 'HomeController@searchPosts', 'as' => 'results' ]);
-        Route::get('/create', ['uses' => 'PostController@index', 'as' => 'create', ]);
-        Route::post('/createpost', ['uses' => 'PostController@postCreatePost', 'as' => 'createpost', ]);
-        Route::post('/delete-post/{post_id}', ['uses' => 'PostController@getDeletePost', 'as' => 'post.delete']);
-        Route::post('/edit', ['uses' => 'PostController@postEditPost', 'as' => 'edit']);
+        Route::get('/create', ['uses' => 'PostController@create', 'as' => 'create', ]);
+        Route::get('/delete/{post_id}', ['uses' => 'PostController@delete', 'as' => 'delete']);
+        Route::get('/edit/{post_id}', ['uses' => 'PostController@edit', 'as' => 'edit']);
         Route::post('/like', ['uses' => 'PostController@postLikePost', 'as' => 'like']);
+        Route::get('/show/{post_id}', ['uses' => 'PostController@show', 'as' => 'show']);
 
 
     });

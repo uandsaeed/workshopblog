@@ -12,7 +12,7 @@
 
     <title>Blog Post - Blog Template</title>
     @include('layouts.includes.css')
-
+    @include('layouts.includes.js')
     @yield('headAssets')
 </head>
 
@@ -47,7 +47,7 @@
                     <a href="{{route('create')}}">Create Post</a>
                 </li>
                 <li>
-                    <a href="{{route('category')}}">Catogry</a>
+                    <a href="{{route('category')}}">Create Catogry</a>
                 </li>
             </ul>
         </div>
@@ -87,7 +87,6 @@
 </div>
 <!-- /.container -->
 
-@include('layouts.includes.js')
 @yield('footerAssets')
 </body>
 
