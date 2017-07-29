@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use App\Models\Post;
 
 class PostsTableSeeder extends Seeder
 {
@@ -11,11 +13,11 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        \Illuminate\Support\Facades\DB::table('categories_posts')->truncate();
-        \App\Models\Post::truncate();
+        DB::table('categories_posts')->truncate();
+        Post::truncate();
 
         $catIds = array(1,2,);
-        $posts = \App\Models\Post::create([
+        $posts = Post::create([
             'user_id' => '1',
             'title' => 'Welcome',
             'photo' => '1.jpg',
@@ -24,7 +26,7 @@ class PostsTableSeeder extends Seeder
         $posts->categories()->sync($catIds);
 
         $catIds = array(3,4);
-        $posts = \App\Models\Post::create([
+        $posts = Post::create([
             'user_id' => '1',
             'title' => 'Welcome 2',
             'photo' => '1.jpg',
@@ -34,7 +36,7 @@ class PostsTableSeeder extends Seeder
 
 
         $catIds = array(1,2,3,4);
-        $posts = \App\Models\Post::create([
+        $posts = Post::create([
             'user_id' => '1',
             'title' => 'Welcome 3',
             'photo' => '1.jpg',
