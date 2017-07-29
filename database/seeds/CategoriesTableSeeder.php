@@ -11,8 +11,8 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Category::truncate();
-        \App\Category::insert([
+        \App\Models\Category::truncate();
+        \App\Models\Category::insert([
             ['name' => 'Happy',],
             ['name' => 'Sad',],
             ['name' => 'Traveling',],

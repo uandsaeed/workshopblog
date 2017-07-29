@@ -22,11 +22,12 @@ class Category extends Model
         $category->name = $data['name'];
 
         $category->save();
-        $response = ['success'=>true, 'error'=> false, 'message'=> 'Posts has been saved successfully!','Post'=>$category];
+        $response = ['success'=>true, 'error'=> false, 'message'=> 'categories has been saved successfully!','Post'=>$category];
         return $response;
     }
 
     public function posts(){
-        return $this->belongsToMany(Post::class);
+//        return $this->belongsToMany(Post::class);
+        return $this->belongsToMany(Post::class, 'categories_posts');
     }
 }

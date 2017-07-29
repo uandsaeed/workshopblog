@@ -45,40 +45,57 @@ class Post extends Model
      * @param $data
      * @return array
      */
-    public function savePost(array $data){
+    public function savePost(array $data)
+    {
         $post = null;
-        if(isset($data['id'])){
+        if (isset($data['id'])) {
             /** @var TYPE_NAME $this */
             $post = self::find($data['id']);
-        }else{
+        } else {
             $post = new Post();
         }
         $post->user_id = $data['user_id'];
         $post->title = $data['title'];
-        $post->category = $data['category'];
-        $post->photo = $data['photo'];
+        $post->photo = $data['image'];
         $post->description = $data['description'];
         $post->save();
-        $response = ['success'=>true, 'error'=> false, 'message'=> 'Posts has been saved successfully!','Post'=>$post];
+
+        $categoriesIds = isset($data['category']) ? $data['category'] : '';
+        if($categoriesIds != ''){
+            foreach($categoriesIds as $qId){
+                $post->categories()->attach($qId);
+            }
+        }
+
+        $response = ['success' => true, 'error' => false, 'message' => 'Posts has been saved successfully!', 'Post' => $post];
         return $response;
+    }
+
+    public static function deletePost($data)
+    {
+        $post = Post::find($data);
+        $post->delete();
+        $response = ['success' => true, 'error' => false, 'message' => 'Posts has been saved successfully!'];
     }
 
     /**
      * @param array $params
      */
-    function fetchPosts($params =array()){
+    function fetchPosts($params = array())
+    {
         $limit = isset($params['limit']) ? $params['limit'] : self::LIMIT;
 
-        $qry = self::select('id','title','user_id','photo','description','created_at');
-        if(isset($params['searchKey'])){
-            $qry->where('title','LIKE' , '%'.$params['searchKey'].'%');
+        $qry = self::select('id', 'title', 'user_id', 'photo', 'description', 'created_at');
+        if (isset($params['searchKey'])) {
+            $qry->where('title', 'LIKE', '%' . $params['searchKey'] . '%');
         }
         $qry->orderBy('created_at', 'desc');
 //        dd($qry->toSql());
         return $qry->paginate($limit);
     }
 
-    public function categories(){
+    public function categories()
+    {
 //        return $this->belongsToMany(Category::class);
         return $this->belongsToMany(Category::class,'categories_posts');
     }
