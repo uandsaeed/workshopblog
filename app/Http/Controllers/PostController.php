@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use App\Http\Requests\CatagoryRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -89,7 +89,7 @@ class PostController extends Controller
         return view('home.category');
     }
 
-    public function createCatagory(CatagoryRequest $request)
+    public function createCatagory(CategoryRequest $request)
     {
         $data = $request->all();
         $response = Category::saveCategory($data);

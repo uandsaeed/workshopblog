@@ -78,16 +78,17 @@ class Post extends Model
         $response = ['success' => true, 'error' => false, 'message' => 'Posts has been saved successfully!'];
     }
 
-    /**
-     * @param array $params
-     */
+
     function fetchPosts($params = array())
     {
         $limit = isset($params['limit']) ? $params['limit'] : self::LIMIT;
-
         $qry = self::select('id', 'title', 'user_id', 'photo', 'description', 'created_at');
         if (isset($params['searchKey'])) {
             $qry->where('title', 'LIKE', '%' . $params['searchKey'] . '%');
+        }
+        if (isset($params['category_ids'])) {
+            $qry->join('categories_posts AS cp', 'cp.post_id', 'posts.id');
+            $qry->whereIn('cp.category_id', $params);
         }
         $qry->orderBy('created_at', 'desc');
 //        dd($qry->toSql());

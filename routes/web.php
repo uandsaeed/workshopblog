@@ -28,6 +28,15 @@ Route::group(['public'],function (){
     Route::group(['Posts'], function () {
         Route::resource('posts',"PostController");
         Route::post('/results', ['uses' => 'HomeController@searchPosts', 'as' => 'results' ]);
+        Route::get('/searchViaCategory/{category_ids?}', ['uses' => 'HomeController@searchViaCategory', 'as' => 'searchViaCategory' ]);
+        Route::get('/create', ['uses' => 'PostController@index', 'as' => 'create', ]);
+        Route::post('/createpost', ['uses' => 'PostController@postCreatePost', 'as' => 'createpost', ]);
+        Route::post('/delete-post/{post_id}', ['uses' => 'PostController@getDeletePost', 'as' => 'post.delete']);
+        Route::post('/update-post/{post_id}', ['uses' => 'PostController@update', 'as' => 'post.update']);
+        Route::post('/edit', ['uses' => 'PostController@edit', 'as' => 'edit']);
+        Route::post('/like', ['uses' => 'PostController@postLikePost', 'as' => 'like']);
+        Route::get('/delete', ['uses' => 'PostController@deletePost', 'as' => 'deletePost']);
+
         Route::get('/create', ['uses' => 'PostController@create', 'as' => 'create', ]);
         Route::get('/delete/{post_id}', ['uses' => 'PostController@delete', 'as' => 'delete']);
         Route::get('/edit/{post_id}', ['uses' => 'PostController@edit', 'as' => 'edit']);
@@ -62,6 +71,9 @@ Route::get('/','HomeController@index');
 Route::get('post', function () {
     return view('home.Post');
 });
+
+Route::get('/',['as' => '/', 'uses' => "HomeController@index"]);
+
 
 
 //Route::get('/', function () {
