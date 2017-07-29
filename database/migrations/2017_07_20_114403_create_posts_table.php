@@ -15,10 +15,9 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->nullable();
-            $table->string('title', 60)->nullable();
-            $table->string('category', 60)->nullable();
-            $table->string('photo', 100)->nullable();
+            $table->integer('user_id');
+            $table->string('title', 60)->nullable(); //might not be nullable.
+            $table->string('photo', 100)->nullable(); //photo might be rename as image as in users table.
             $table->string('description', 512)->nullable();
             $table->timestamps();
         });
