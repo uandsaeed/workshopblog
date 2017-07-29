@@ -16,6 +16,8 @@ use \App\Http\Controllers\UserController;
 Route::group(['public'],function (){
 
     Route::group(['Home'], function () {
+        Route::get('/','HomeController@index');
+        Route::get('/home', 'HomeController@index')->name('home');
         Route::resource('home',"HomeController");
     });
 
@@ -27,17 +29,12 @@ Route::group(['public'],function (){
 
     Route::group(['Posts'], function () {
         Route::post('/results', ['uses' => 'HomeController@searchPosts', 'as' => 'results' ]);
-        Route::get('/create', ['uses' => 'PostController@create', 'as' => 'create', ]);
-        Route::get('/delete/{post_id}', ['uses' => 'PostController@delete', 'as' => 'delete']);
-        Route::get('/edit/{post_id}', ['uses' => 'PostController@edit', 'as' => 'edit']);
-        Route::post('/like', ['uses' => 'PostController@postLikePost', 'as' => 'like']);
-        Route::get('/show/{post_id}', ['uses' => 'PostController@show', 'as' => 'show']);
+        Route::get('/show/{post_id}', ['uses' => 'PostController@show', 'as' => 'posts.show']);
 
 
     });
 
     Route::group(['Categories'], function () {
-
         Route::get('/category', ['uses' => 'CategoryController@index', 'as' => 'category', ]);
         Route::post('/createcategory', ['uses' => 'CategoryController@createCategory', 'as' => 'createcategory', ]);
         Route::get('/delete_category/{id}', ['uses' => 'CategoryController@destroy_cat', 'as' => 'delete_category']);
@@ -48,26 +45,11 @@ Route::group(['public'],function (){
 });
 
 Route::group(['private', "middleware" => 'auth'],function (){
-    Route::resource('posts',"PostController");
+    Route::group(['Posts'], function () {
+        Route::resource('posts',"PostController");
+        Route::post('/like', ['uses' => 'PostController@postLikePost', 'as' => 'like']);
+        Route::get('/show/{post_id}', ['uses' => 'PostController@show', 'as' => 'show']);
+    });
+
 });
-//$route = new Route();
-//Route::get('/',['as' => '/', 'uses' => "HomeController@index"]);
-
-Route::get('/','HomeController@index');
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-Route::get('post', function () {
-    return view('home.Post');
-});
-
-
-//Route::get('/', function () {
-//    return view('home.index');
-//});
-
-
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -1,4 +1,5 @@
 <section>
+    @
     <div class="col-md-8">
         <div class="row">
             <h1>@if($post->id == "") Create Post @else Edit Form @endif</h1>

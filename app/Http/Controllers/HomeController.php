@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    private $post;
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * PostController constructor.
+     * @param $post
      */
-    public function __construct()
+    public function __construct(Post $post)
     {
-        $this->middleware('auth');
+        $this->post = $post;
     }
 
     /**
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $posts = $this->post->fetchPosts();
+        $message = null;
+        /*if($request->session()->has('message')){
+            $message = $request->get('message',null);
+        }*/
+        return view('home.index', compact('posts','message'));
     }
 }
