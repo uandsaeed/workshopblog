@@ -12,10 +12,10 @@ class PostsTableSeeder extends Seeder
     public function run()
     {
         \Illuminate\Support\Facades\DB::table('categories_posts')->truncate();
-        \App\Post::truncate();
+        \App\Models\Post::truncate();
 
         $catIds = array(1,2,);
-        $posts = \App\Post::create([
+        $posts = \App\Models\Post::create([
             'user_id' => '1',
             'title' => 'Welcome',
             'photo' => '1.jpg',
@@ -24,7 +24,7 @@ class PostsTableSeeder extends Seeder
         $posts->categories()->sync($catIds);
 
         $catIds = array(3,4);
-        $posts = \App\Post::create([
+        $posts = \App\Models\Post::create([
             'user_id' => '1',
             'title' => 'Welcome 2',
             'photo' => '1.jpg',
@@ -34,7 +34,7 @@ class PostsTableSeeder extends Seeder
 
 
         $catIds = array(1,2,3,4);
-        $posts = \App\Post::create([
+        $posts = \App\Models\Post::create([
             'user_id' => '1',
             'title' => 'Welcome 3',
             'photo' => '1.jpg',

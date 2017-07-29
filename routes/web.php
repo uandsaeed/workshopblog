@@ -39,8 +39,11 @@ Route::group(['public'],function (){
 
     Route::group(['Categories'], function () {
 
-        Route::get('/category', ['uses' => 'PostController@category', 'as' => 'category', ]);
-        Route::post('/createcategory', ['uses' => 'PostController@createCatagory', 'as' => 'createcategory', ]);
+        Route::get('/category', ['uses' => 'CategoryController@index', 'as' => 'category', ]);
+        Route::post('/createcategory', ['uses' => 'CategoryController@createCategory', 'as' => 'createcategory', ]);
+        Route::get('/delete_category/{id}', ['uses' => 'CategoryController@destroy_cat', 'as' => 'delete_category']);
+        Route::get('/editCategory/{id}', ['uses' => 'CategoryController@edit', 'as' => 'editCategory']);
+        Route::put('/updateCategory/{id}', ['uses' => 'CategoryController@update_cat', 'as' => 'updateCategory']);
     });
 
 });
