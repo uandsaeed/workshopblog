@@ -14,7 +14,7 @@ class AlterPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('category');
+//            $table->dropColumn('category');
         });
     }
 
@@ -26,7 +26,7 @@ class AlterPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('category', 60)->nullable();
+//            $table->string('category', 60)->nullable();         no need of category column in posts table if posts and categories have many to many relationship
         });
     }
 }

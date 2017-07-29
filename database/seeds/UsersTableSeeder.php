@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -11,10 +12,10 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::truncate();
-        \App\Models\User::insert([
+        User::truncate();
+        User::insert([
 
-            ['id' => '1','name' => 'user','email' => 'user@gmail.com','password' => '123456'],
+            ['id' => '1','name' => 'user','email' => 'user@gmail.com','password' => \Hash::make('123456')]
 
         ]);
     }

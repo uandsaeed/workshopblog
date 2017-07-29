@@ -26,7 +26,6 @@ Route::group(['public'],function (){
     });
 
     Route::group(['Posts'], function () {
-        Route::resource('posts',"PostController");
         Route::post('/results', ['uses' => 'HomeController@searchPosts', 'as' => 'results' ]);
         Route::get('/searchViaCategory/{category_ids?}', ['uses' => 'HomeController@searchViaCategory', 'as' => 'searchViaCategory' ]);
         Route::get('/create', ['uses' => 'PostController@index', 'as' => 'create', ]);
@@ -57,13 +56,13 @@ Route::group(['public'],function (){
 
 });
 
-Route::group(['private'],function (){
-
+Route::group(['private', "middleware" => 'auth'],function (){
+    Route::resource('posts',"PostController");
 });
 //$route = new Route();
 //Route::get('/',['as' => '/', 'uses' => "HomeController@index"]);
 
-Route::get('/','HomeController@index');
+Route::get('/','PostController@index');
 //Route::get('/', function () {
 //    return view('welcome');
 //});
@@ -80,3 +79,7 @@ Route::get('/',['as' => '/', 'uses' => "HomeController@index"]);
 //    return view('home.index');
 //});
 
+
+Auth::routes();
+
+Route::get('/home', 'PostController@index')->name('home');

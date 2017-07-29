@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->integer('post_id');
             $table->integer('user_id');
-            $table->string('message',1024);
+            $table->string('message',1024); //name of column message might be description as in posts table
             $table->timestamps();
             $table->softDeletes();
         });
