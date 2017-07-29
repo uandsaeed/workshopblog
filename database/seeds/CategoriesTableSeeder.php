@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Category;
 
 class CategoriesTableSeeder extends Seeder
 {
@@ -11,13 +12,14 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Category::truncate();
-        \App\Models\Category::insert([
-            ['name' => 'Happy',],
-            ['name' => 'Sad',],
-            ['name' => 'Traveling',],
-            ['name' => 'Tired',],
-            ['name' => 'Romantic',],
+        Category::truncate();
+        Category::insert([
+
+            ['name' => 'Happy'],
+            ['name' => 'Sad'],
+            ['name' => 'Traveling'],
+            ['name' => 'Tired'],
+            ['name' => 'Romantic'],
         ]);
 
     }
