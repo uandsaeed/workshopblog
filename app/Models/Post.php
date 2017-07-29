@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    const LIMIT = 50;
+    const LIMIT = 2;
     protected $fillable = [
         'title', 'category', 'photo', 'description', 'user_id'
     ];

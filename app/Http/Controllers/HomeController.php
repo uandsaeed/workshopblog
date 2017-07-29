@@ -1,22 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Category;
 use app\Http\Requests\Request;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Post;
+
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-
     private $post;
-
-    public function __construct(Post $post){
+    /**
+     * PostController constructor.
+     * @param $post
+     */
+    public function __construct(Post $post)
+    {
         $this->post = $post;
     }
 
@@ -28,6 +26,21 @@ class HomeController extends Controller
     public function index()
     {
         return redirect()->route('home');
+        $posts = $this->post->fetchPosts();
+        $message = null;
+        /*if($request->session()->has('message')){
+            $message = $request->get('message',null);
+        }*/
+        return view('home.index', compact('posts','message'));
+    }
+
+    public function searchPosts(CategoryRequest $request){
+
+        $searchKey = $request->get('searchKey',null);
+        $posts = null;
+        $params['searchKey'] = $searchKey;
+        $posts = $this->post->fetchPosts($params);
+        return view('home.index',['posts' => $posts]);
     }
 
 
