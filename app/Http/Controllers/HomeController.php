@@ -1,48 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mrashid
- * Date: 7/15/2017
- * Time: 9:00 PM
- */
+
 namespace App\Http\Controllers;
 
-
-use App\Models\Category;
-use app\Http\Requests\Request;
-use App\Models\Post;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-
-    private $post;
-
     /**
-     * HomeController constructor.
-     * @param $post
+     * Create a new controller instance.
+     *
+     * @return void
      */
-    public function __construct(Post $post)
+    public function __construct()
     {
-        $this->post = $post;
+        $this->middleware('auth');
     }
-
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function index(){
-        $posts = $this->post->fetchPosts();
-        return view('home.index',['posts' => $posts]);
+    public function index()
+    {
+        return view('home');
     }
-
-    public function searchPosts(Request $request){
-
-        $searchKey = $request->get('searchKey',null);
-        $posts = null;
-        $params['searchKey'] = $searchKey;
-        $posts = $this->post->fetchPosts($params);
-        return view('home.index',['posts' => $posts]);
-    }
-
-
 }
