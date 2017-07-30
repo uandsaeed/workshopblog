@@ -8,7 +8,7 @@ class Post extends Model
 {
     const LIMIT = 50;
     protected $fillable = [
-        'title', 'category', 'photo', 'description', 'user_id'
+        'title', 'category', 'photo', 'description', 'user_id'  //@todo category column should be removed
     ];
 
     /**

@@ -53,10 +53,10 @@ Route::group(['private', "middleware" => 'auth'],function (){
 //$route = new Route();
 //Route::get('/',['as' => '/', 'uses' => "HomeController@index"]);
 
-Route::get('/','PostController@index');
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+//Route::get('/','PostController@index');
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('post', function () {
     return view('home.Post');
