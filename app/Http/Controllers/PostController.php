@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use App\Http\Requests\CatagoryRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -29,7 +29,6 @@ class PostController extends Controller
         $message = null;
         if($request->session()->has('message')){
             $message = $request->get('message',null);
-//            dd($message);
         }
         return view('home.index', compact('posts','message'));
     }
@@ -48,37 +47,22 @@ class PostController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
         $data = $request->all();
-            if($data['image']) {
-                $file = $data['image'];
-                //saving image in public/assets/images folder with its extension
-                $pathToSaveImage = public_path().'/assets/images/';
-                $fileOriginalNameDetailArray = pathinfo($file->getClientOriginalName());
-                $fileName = time() . "_" . rand(1, 1000) . "." . $fileOriginalNameDetailArray['extension'];
-                $file->move($pathToSaveImage, $fileName);
-
-                $data['image']=$fileName;
-            }
+        $fileData = isset($data['image']) && count($data['image']) > 0 ? $data['image'] : null;
+        if($fileData) {
+            $data['image'] = $this->uploadFile($fileData);
+        }
         $this->post->savePost($data);
         return redirect()->route('home.index')->with('message','Post has been save successfully!');
     }
 
     public function update(Request $request, $id){
         $data = $request->all();
-        if (isset($data['image']) && count($data['image']) > 0) {
-            if($data['image']) {
-                $file = $data['image'];
-
-                //saving image in public/assets/images folder with its extension
-                $pathToSaveImage = public_path().'/assets/images/';
-                $fileOriginalNameDetailArray = pathinfo($file->getClientOriginalName());
-                $fileName = time() . "_" . rand(1, 1000) . "." . $fileOriginalNameDetailArray['extension'];
-                $file->move($pathToSaveImage, $fileName);
-
-                $data['image']=$fileName;
-            }
+        $fileData = isset($data['image']) && count($data['image']) > 0 ? $data['image'] : null;
+        if($fileData) {
+            $data['image'] = $this->uploadFile($fileData);
         }
         $data['id'] = $id;
         $this->post->savePost($data);
@@ -89,7 +73,7 @@ class PostController extends Controller
         return view('home.category');
     }
 
-    public function createCatagory(CatagoryRequest $request)
+    public function createCatagory(CategoryRequest $request)
     {
         $data = $request->all();
         $response = Category::saveCategory($data);
@@ -105,5 +89,16 @@ class PostController extends Controller
     public function delete($post_id) {
         $this->post->deletePost($post_id);
         return redirect()->route('home.index')->with('message','Post has been save successfully!');
+    }
+
+    private function uploadFile($imageData){
+        $file = $imageData;
+        //saving image in public/assets/images folder with its extension
+        $pathToSaveImage = public_path('/assets/uploads/posts/');
+        $fileOriginalNameDetailArray = pathinfo($file->getClientOriginalName());
+        $fileName = time() . "_" . rand(1, 1000) . "." . $fileOriginalNameDetailArray['extension'];
+        $file->move($pathToSaveImage, $fileName);
+
+        return $fileName;
     }
 }

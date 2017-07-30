@@ -24,7 +24,7 @@ class StorePostRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required',
+            'title' => 'required|max:50',
             'category' => 'required',
             'photo' => 'required',
             'description' => 'required',

@@ -16,29 +16,31 @@
             <article class="post" data-postid="{{ $post->id }}">
             <!-- First Blog Post -->
             <h2>
-                <a href="{{ route('show', ['post_id' => $post->id]) }}">{{ $post->title }}
-
+                <a href="{{ route('show', ['post_id' => $post->id]) }}">{{ $post->title }}</a>
+            </h2>
                 <?php
 //                $categories = $post->categories()->where('name','=','Happy')->get();
                 $categories = $post->categories()->get();
 //                        dd($categories);
                 ?>
+                    <p>categories:{
                 @if($categories)
                     @if($categories->count())
                         @foreach($categories as $c)
-                            {{ $c->name }},
+                         <a href="{{route('searchViaCategory',['category_ids'=>$c->id])}}">{{ $c->name }}</a>,
                         @endforeach
                     @endif
                 @endif
+                        }
+                    </p>
 
                 </a>
-            </h2>
             <p class="lead">
                 by <a href="#"> {{ $post->user->name }}</a>
             </p>
             <p><span class="glyphicon glyphicon-time"></span> Posted on {{ $post->created_at }}</p>
             <hr>
-            <img class="img-responsive" src='assets/images/{{ $post->photo }}' alt="">
+            <img class="img-responsive" src='../assets/images/{{ $post->photo }}' alt="">
             <hr>
             <p>{{ $post->description }}</p>
             <a class="btn btn-primary" href="{{ route('show', ['post_id' => $post->id]) }}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
