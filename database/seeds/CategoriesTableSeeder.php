@@ -13,13 +13,15 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         Category::truncate();
+
+        //*** if you use Category::create rather than Category::insert hen no need to manually setting timestamp fields
         Category::insert([
 
-            ['name' => 'Happy'],
-            ['name' => 'Sad'],
-            ['name' => 'Traveling'],
-            ['name' => 'Tired'],
-            ['name' => 'Romantic'],
+            ['name' => 'Happy','created_at'=>date('Y-m-d'),'updated_at'=>date('Y-m-d')],
+            ['name' => 'Sad','created_at'=>date('Y-m-d'),'updated_at'=>date('Y-m-d')],
+            ['name' => 'Traveling','created_at'=>date('Y-m-d'),'updated_at'=>date('Y-m-d')],
+            ['name' => 'Tired','created_at'=>date('Y-m-d'),'updated_at'=>date('Y-m-d')],
+            ['name' => 'Romantic','created_at'=>date('Y-m-d'),'updated_at'=>date('Y-m-d')],
         ]);
 
     }

@@ -8,46 +8,32 @@
     </style>
 @stop
 @section('pageContent')
-    {{--@if($message)--}}
-        {{--<h1>{{$message}}</h1>--}}
-    {{--@endif--}}
-    {{--All posts will be here {{ dd($posts)}}--}}
-<div class="col-md-8">
-    @if($post)
-        {{--@foreach($posts as $post)--}}
-            <article class="post" data-postid="{{ $post->id }}">
-                <!-- First Blog Post -->
-                <h2>
-                    <a href="#">{{ $post->title }}
-                    <?php
-                        $categories = $post->categories()->get();
-                        ?>
-                        @if($categories)
-                            @if($categories->count())
-                                @foreach($categories as $c)
-                                    {{ $c->name }},
-                                @endforeach
-                            @endif
-                        @endif
-                        <a class="btn btn-primary" href="{{ route('edit', ['post_id' => $post->id]) }}" style="float:right">Edit</a>
-                        <a class="btn btn-danger" href="{{ route('delete', ['post_id' => $post->id]) }}" style="float:right">Delete</a>
-                    </a>
-                </h2>
-                <p class="lead">
-                    by <a href="#"> {{ $post->user->name }}</a>
-                </p>
-                <p><span class="glyphicon glyphicon-time"></span> Posted on {{ $post->created_at }}</p>
-                <hr>
-                <img class="img-responsive" src='../assets/images/{{ $post->photo }}' alt="">
-                <hr>
-                <p>{{ $post->description }}</p>
-
-                <hr>
-            </article>
-        {{--@endforeach--}}
-    @endif
-</div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Categories</th>
+            <th>User</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if($posts)
+            @foreach($posts as $post)
+            <tr>
+                <td>{{$post->title}}</td>
+                <td>{{$post->getPostCategoriesName()}}</td>
+                <td><a href="#" >{{$post->user->name}}</a></td>
+            </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="3">There is no record found!</td>
+            </tr>
+        @endif
+        </tbody>
+    </table>
 @stop
 
 
+@section('rightBar')@stop
 @section('footerAssets')@stop

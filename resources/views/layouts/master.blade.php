@@ -12,7 +12,6 @@
 
     <title>Blog Post - Blog Template</title>
     @include('layouts.includes.css')
-    @include('layouts.includes.js')
     @yield('headAssets')
 </head>
 
@@ -35,37 +34,53 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Posts</a></li>
-                <li><a href="#">Categories</a></li>
-
+                <li><a href="{{route('home')}}">Home</a></li>
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ route('login') }}">Login</a></li>
                     <li><a href="{{ route('register') }}">Register</a></li>
                 @else
                     <li><a href="{{route('posts.create')}}">Create Post</a></li>
-                    <li><a href="{{route('category')}}">Create Catogry</a></li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                            Administration <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                    Logout
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                            </li>
+                            <li><a href="{{route('categories.index')}}">Categories</a></li>
+                            <li><a href="{{route('categories.create')}}">Create Category</a></li>
+                            <li><a href="{{route('posts.index')}}">Posts</a></li>
+                            {{--<li><a href="{{route('comments.index')}}">Comments</a></li>--}}
                         </ul>
                     </li>
+
                 @endif
             </ul>
+            @if (Auth::check())
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Welcome, {{ Auth::user()->name }} <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+
+                        <li><a href="#">Edit Profile</a></li>
+                        <li><a href="#">Change Password</a></li>
+                        <li>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            @endif
         </div>
         <!-- /.navbar-collapse -->
     </div>
@@ -93,16 +108,35 @@
     <footer>
         <hr>
         <div class="row">
-            <div class="col-lg-12">
-                <p>Copyright &copy; Your Website 2014</p>
+            <div class="col-lg-6">
+                <p>Copyright &copy; Your Website 2017</p>
+            </div>
+            <div class="col-lg-6">
+                <p class="text-right">Best start Code for Laravel beginners</p>
             </div>
         </div>
         <!-- /.row -->
     </footer>
 
 </div>
+@include('layouts.includes.js')
 <!-- /.container -->
+<script>
+    $('#frmHomeSearch').submit(function (e) {
+        e.preventDefault();
+        var urlVal = $(this).attr('action');
+        var frmData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: urlVal,
+            data: frmData,
+            success: function (response) {
+                $('#postDataContainer').html(response);
+            }
 
+        })
+    })
+</script>
 @yield('footerAssets')
 </body>
 

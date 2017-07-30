@@ -24,52 +24,53 @@ class PostController extends Controller
     }
 
 
-    public function index(Request $request) {
-        $posts = Post::all();
-        $message = null;
-        if($request->session()->has('message')){
-            $message = $request->get('message',null);
-        }
-        return view('home.index', compact('posts','message'));
+    public function index()
+    {
+        $posts = $this->post->fetchPosts();
+        return view('post.index', compact('posts'));
     }
 
-    public function create() {
+    public function create()
+    {
         $post = $this->post;
-        return view('post.create',compact('post'));
+        return view('post.create', compact('post'));
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $post = Post::find($id);
-        return view('post.edit',compact('post'));
+        return view('post.edit', compact('post'));
     }
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param StorePostRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StorePostRequest $request)
     {
         $data = $request->all();
         $fileData = isset($data['image']) && count($data['image']) > 0 ? $data['image'] : null;
-        if($fileData) {
+        if ($fileData) {
             $data['image'] = $this->uploadFile($fileData);
         }
         $this->post->savePost($data);
-        return redirect()->route('home.index')->with('message','Post has been save successfully!');
+        return redirect()->route('home.index')->with('message', 'Post has been save successfully!');
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $data = $request->all();
         $fileData = isset($data['image']) && count($data['image']) > 0 ? $data['image'] : null;
-        if($fileData) {
+        if ($fileData) {
             $data['image'] = $this->uploadFile($fileData);
         }
         $data['id'] = $id;
         $this->post->savePost($data);
-        return redirect()->route('home.index')->with('message','Post has been save successfully!');
+        return redirect()->route('home.index')->with('message', 'Post has been save successfully!');
     }
 
-    public function category() {
+    public function category()
+    {
         return view('home.category');
     }
 
@@ -81,17 +82,20 @@ class PostController extends Controller
 
     }
 
-    public function show($post_id) {
+    public function show($post_id)
+    {
         $post = Post::where('id', $post_id)->first();
-        return View('post.index',  ['post' => $post]);
+        return View('post.index', ['post' => $post]);
     }
 
-    public function delete($post_id) {
+    public function delete($post_id)
+    {
         $this->post->deletePost($post_id);
-        return redirect()->route('home.index')->with('message','Post has been save successfully!');
+        return redirect()->route('home.index')->with('message', 'Post has been save successfully!');
     }
 
-    private function uploadFile($imageData){
+    private function uploadFile($imageData)
+    {
         $file = $imageData;
         //saving image in public/assets/images folder with its extension
         $pathToSaveImage = public_path('/assets/uploads/posts/');

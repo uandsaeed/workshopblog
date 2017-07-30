@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    private $category;
+    /**
+     * CategoryController constructor.
+     * @param Category $category
+     */
     public function __construct(Category $category)
     {
         $this->category = $category;

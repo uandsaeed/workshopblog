@@ -5,7 +5,7 @@
 <div class="well">
 <h4>Blog Search</h4>
 <div class="input-group">
-    <form action="{{route('results')}}" method="post">
+    <form id="frmHomeSearch" action="{{route('filterPosts')}}" method="post">
         <input type="text" class="form-control" name="searchKey">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <span class="input-group-btn">

@@ -13,10 +13,12 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::truncate();
-        User::insert([
+        //Create Admin
+        $user = User::create(['name' => 'Ali Raza','email' => 'admin@gmail.com','password' => \Hash::make('123456')]);
+        $user->roles()->sync([\App\Utils\AppGlobal::ADMIN]);
 
-            ['id' => '1','name' => 'user','email' => 'user@gmail.com','password' => \Hash::make('123456')]
-
-        ]);
+        //Create Registered User
+        $user = User::create(['name' => 'Aslam Khan','email' => 'user@gmail.com','password' => \Hash::make('123456')]);
+        $user->roles()->sync([\App\Utils\AppGlobal::REGISTERED]);
     }
 }

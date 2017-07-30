@@ -12,10 +12,10 @@
 
 <!-- Bootstrap Core JavaScript -->
  <script type="text/javascript" src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
- <script type="text/javascript" src="{{ URL::asset('assets/js/select2.js') }}"></script>
+ {{--<script type="text/javascript" src="{{ URL::asset('assets/js/select2.js') }}"></script>--}}
 
  <script  type="text/javascript">
      $(document).ready(function() {
-         $("#category").select2();
+//         $("#category").select2();
      });
  </script>

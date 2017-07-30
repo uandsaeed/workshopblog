@@ -1,5 +1,16 @@
 <section>
-    @
+    <div id="errors">
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
     <div class="col-md-8">
         <div class="row">
             <h1>@if($post->id == "") Create Post @else Edit Form @endif</h1>
@@ -15,7 +26,7 @@
 
             <div class="form-group">
                 <label for="pwd">Title:</label>
-                <input type="text" id="title" name="title"  class="form-control" value="{{$post->title}}" required >
+                <input type="text" id="title" name="title"  class="form-control" value="{{$post->title}}" >
             </div>
             <div class="form-group">
                 <label class="col-xs-5 control-label asterisk">Category:</label>
@@ -32,7 +43,7 @@
             <div class="form-group">
                 <div class="form-group col-md-6">
                     <label for="image">Image:</label>
-                    <input type="file" class="file-loading btn black" name="image" @if($post->id==null) required @endif />
+                    <input type="file" class="file-loading btn black" name="image" @if($post->id==null)  @endif />
                 </div>
                 <div class="form-group col-md-6">
                     @if($post->photo)

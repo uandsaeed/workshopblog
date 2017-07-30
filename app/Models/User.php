@@ -27,19 +27,36 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * @var array
+     */
     public static $rules = [
         'email' => 'required',
         'password' => 'required',
         'name' => 'required',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class,'roles_users');
     }
 }

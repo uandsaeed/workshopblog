@@ -24,12 +24,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         $posts = $this->post->fetchPosts();
-        $message = null;
-        /*if($request->session()->has('message')){
-            $message = $request->get('message',null);
-        }*/
-        return view('home.index', compact('posts','message'));
+        return view('home.index',compact('message'))->nest('postList','home.partials._postList',compact('posts'));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function filterPosts(Request $request){
+        $data = $request->all();
+        $posts = $this->post->fetchPosts($data);
+        return view('home.partials._postList',compact('posts'));
     }
 }

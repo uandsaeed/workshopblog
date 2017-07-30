@@ -99,4 +99,22 @@ class Post extends Model
 //        return $this->belongsToMany(Category::class);
         return $this->belongsToMany(Category::class,'categories_posts');
     }
+
+    /**
+     * @return string
+     */
+    public function getPostCategoriesName()
+    {
+        $names = '';
+        $categories = $this->categories()->get();
+        if ($categories){
+            $total = $categories->count();
+            if ($total){
+                foreach ($categories as $c){
+                    $names .= $c->name . ', ';
+                }
+            }
+        }
+        return rtrim($names,', ');
+    }
 }

@@ -15,10 +15,14 @@ use \App\Http\Controllers\UserController;
 
 Route::group(['public'],function (){
 
+    Route::group(['Error'], function () {
+        Route::get('error/{code?}', 'ErrorController@error')->name('error');
+    });
+
     Route::group(['Home'], function () {
         Route::get('/','HomeController@index');
-        Route::get('/home', 'HomeController@index')->name('home');
-        Route::resource('home',"HomeController");
+        Route::get('home', 'HomeController@index')->name('home');
+        Route::post('filterPosts', ['uses' => 'HomeController@filterPosts', 'as' => 'filterPosts']);
     });
 
     Route::group(['Users'], function () {
@@ -30,25 +34,26 @@ Route::group(['public'],function (){
     Route::group(['Posts'], function () {
         Route::post('/results', ['uses' => 'HomeController@searchPosts', 'as' => 'results' ]);
         Route::get('/show/{post_id}', ['uses' => 'PostController@show', 'as' => 'posts.show']);
-
-
     });
 
-    Route::group(['Categories'], function () {
-        Route::get('/category', ['uses' => 'CategoryController@index', 'as' => 'category', ]);
-        Route::post('/createcategory', ['uses' => 'CategoryController@createCategory', 'as' => 'createcategory', ]);
-        Route::get('/delete_category/{id}', ['uses' => 'CategoryController@destroy_cat', 'as' => 'delete_category']);
-        Route::get('/editCategory/{id}', ['uses' => 'CategoryController@edit', 'as' => 'editCategory']);
-        Route::put('/updateCategory/{id}', ['uses' => 'CategoryController@update_cat', 'as' => 'updateCategory']);
-    });
+
 
 });
 
-Route::group(['private', "middleware" => 'auth'],function (){
+Route::group(['private', "middleware" => ['auth','app.access.control']],function (){
+
     Route::group(['Posts'], function () {
         Route::resource('posts',"PostController");
         Route::post('/like', ['uses' => 'PostController@postLikePost', 'as' => 'like']);
         Route::get('/show/{post_id}', ['uses' => 'PostController@show', 'as' => 'show']);
+    });
+
+    Route::group(['Categories'], function () {
+        Route::resource('categories',"CategoryController");
+        Route::post('/createcategory', ['uses' => 'CategoryController@createCategory', 'as' => 'createcategory', ]);
+        Route::get('/delete_category/{id}', ['uses' => 'CategoryController@destroy_cat', 'as' => 'delete_category']);
+        Route::get('/editCategory/{id}', ['uses' => 'CategoryController@edit', 'as' => 'editCategory']);
+        Route::put('/updateCategory/{id}', ['uses' => 'CategoryController@update_cat', 'as' => 'updateCategory']);
     });
 
 });

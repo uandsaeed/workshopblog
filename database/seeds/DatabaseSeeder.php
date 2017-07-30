@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
         \Illuminate\Database\Eloquent\Model::unguard();
 
         $this->call(CategoriesTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(AccessesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(PostsTableSeeder::class);
     }
