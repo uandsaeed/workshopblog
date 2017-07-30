@@ -61,11 +61,12 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        Welcome, {{ Auth::user()->name }} <span class="caret"></span>
+                        Welcome, {{ $loggedInUserName }} <span class="caret"></span>
                     </a>
 
                     <ul class="dropdown-menu" role="menu">
 
+                        <li><a href="#">My Total Posts: [{{$userPostCount}}]</a></li>
                         <li><a href="#">Edit Profile</a></li>
                         <li><a href="#">Change Password</a></li>
                         <li>
@@ -77,6 +78,7 @@
                                 {{ csrf_field() }}
                             </form>
                         </li>
+
                     </ul>
                 </li>
             </ul>
@@ -96,9 +98,7 @@
 
 
         <!-- Blog Sidebar Widgets Column -->
-        @section('rightBar')
-            @include('layouts.side-widgets')
-        @show
+        @yield('rightBar')
     </div>
 
 
@@ -119,24 +119,8 @@
     </footer>
 
 </div>
-@include('layouts.includes.js')
 <!-- /.container -->
-<script>
-    $('#frmHomeSearch').submit(function (e) {
-        e.preventDefault();
-        var urlVal = $(this).attr('action');
-        var frmData = $(this).serialize();
-        $.ajax({
-            type: 'POST',
-            url: urlVal,
-            data: frmData,
-            success: function (response) {
-                $('#postDataContainer').html(response);
-            }
-
-        })
-    })
-</script>
+@include('layouts.includes.js')
 @yield('footerAssets')
 </body>
 

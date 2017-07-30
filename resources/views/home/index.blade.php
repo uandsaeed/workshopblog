@@ -15,3 +15,26 @@
     </div>
 
 @stop
+
+@section('rightBar')
+    @include('layouts.side-widgets')
+@stop
+
+@section('footerAssets')
+    <script>
+        $('form').submit(function (e) {
+            e.preventDefault();
+            var urlVal = $(this).attr('action');
+            var frmData = $(this).serialize();
+            $.ajax({
+                type: 'POST',
+                url: urlVal,
+                data: frmData,
+                success: function (response) {
+                    $('#postDataContainer').html(response);
+                }
+
+            })
+        })
+    </script>
+@stop

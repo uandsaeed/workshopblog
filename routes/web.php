@@ -23,6 +23,7 @@ Route::group(['public'],function (){
         Route::get('/','HomeController@index');
         Route::get('home', 'HomeController@index')->name('home');
         Route::post('filterPosts', ['uses' => 'HomeController@filterPosts', 'as' => 'filterPosts']);
+        Route::post('searchViaCategory', ['uses' => 'HomeController@searchViaCategory', 'as' => 'searchViaCategory' ]);
     });
 
     Route::group(['Users'], function () {
@@ -35,12 +36,9 @@ Route::group(['public'],function (){
         Route::post('/results', ['uses' => 'HomeController@searchPosts', 'as' => 'results' ]);
         Route::get('/show/{post_id}', ['uses' => 'PostController@show', 'as' => 'posts.show']);
     });
-
-
-
 });
 
-Route::group(['private', "middleware" => ['auth','app.access.control']],function (){
+Route::group(['private', "middleware" => 'auth'],function (){
 
     Route::group(['Posts'], function () {
         Route::resource('posts',"PostController");
@@ -55,6 +53,5 @@ Route::group(['private', "middleware" => ['auth','app.access.control']],function
         Route::get('/editCategory/{id}', ['uses' => 'CategoryController@edit', 'as' => 'editCategory']);
         Route::put('/updateCategory/{id}', ['uses' => 'CategoryController@update_cat', 'as' => 'updateCategory']);
     });
-
 });
 Auth::routes();
