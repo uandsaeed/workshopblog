@@ -25,7 +25,10 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "files": [
+            "app/Helpers/ViewHelper.php"
+        ]
     },
     "scripts": {
         "post-root-package-install": [

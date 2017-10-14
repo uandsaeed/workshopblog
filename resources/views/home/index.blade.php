@@ -1,70 +1,40 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+@extends('layouts.master')
+@section('pageContent')
+    <!-- Blog Entries Column -->
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <div  class="col-md-8">
 
-    <!-- Styles -->
-    <style>
-        html, body {
-            background-color: #fff;
-            color: #636b6f;
-            font-family: 'Raleway', sans-serif;
-            font-weight: 100;
-            height: 100vh;
-            margin: 0;
-        }
+        <h1 class="page-header">
+            Welcome to Home,
+            <small>Laravel Blog helpful for beginners</small>
+        </h1>
+        <div id="postDataContainer">
+            {!! $postList !!}
+        </div>
+    </div>
 
-        .full-height {
-            height: 100vh;
-        }
+@stop
 
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
+@section('rightBar')
+    @include('layouts.side-widgets')
+@stop
 
-        .position-ref {
-            position: relative;
-        }
+@section('footerAssets')
+    <script>
+        $('form').submit(function (e) {
+            e.preventDefault();
+            var urlVal = $(this).attr('action');
+            var frmData = $(this).serialize();
+            $.ajax({
+                type: 'POST',
+                url: urlVal,
+                data: frmData,
+                success: function (response) {
+                    $('#postDataContainer').html(response);
+                }
 
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 84px;
-        }
-
-        .links > a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .m-b-md {
-            margin-bottom: 30px;
-        }
-    </style>
-</head>
-<body>
-<h1>Hello, {{$world}}</h1>
-</body>
-</html>
+            })
+        })
+    </script>
+@stop
