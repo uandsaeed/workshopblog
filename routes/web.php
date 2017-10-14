@@ -13,6 +13,13 @@
 use \App\Http\Controllers\HomeController;
 use \App\Http\Controllers\UserController;
 
+Route::get('home/abc','HomeController@index')->name('homeIndex');
+
+Route::post();
+Route::any();
+Route::resource();
+Route::group();
+
 Route::group(['public'],function (){
 
     Route::group(['Users'], function () {
