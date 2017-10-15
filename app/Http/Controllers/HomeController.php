@@ -57,4 +57,11 @@ class HomeController extends Controller
         return view('home.partials._postList',compact('posts'));
     }
 
+    public function test($code)
+    {
+    	$hi = "Hi,";
+    	$world = "Batch 3 class";
+    	return view('home.test',compact('hi', 'world','code'));
+    }
+
 }

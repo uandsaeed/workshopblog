@@ -13,7 +13,7 @@
 use \App\Http\Controllers\HomeController;
 use \App\Http\Controllers\UserController;
 
-Route::get('home/abc','HomeController@index')->name('homeIndex');
+Route::get('home/abc/efg/{code}','HomeController@test')->name('test');
 
 /*Route::post();
 Route::any();
@@ -35,6 +35,15 @@ Route::group(['public'],function (){
 
     Route::group(['Users'], function () {
         Route::resource('users',"UserController");
+        
+        /*Route::get('users.index',"UserController@index")->name('users.index');
+        Route::get('users.create',"UserController@create")->name('users.create');
+        Route::get('users.edit/{id}',"UserController@edit")->name('users.edit');
+        Route::post('users.store',"UserController@store")->name('users.store');
+        Route::post('users.update/{id}',"UserController@update")->name('users.update');
+        Route::get('users.show/{id}',"UserController@show")->name('users.show');
+        Route::get('users.destroy/{id}',"UserController@destroy")->name('users.destroy');*/
+
         Route::get('test/{id?}',['as' => 'test', 'uses' => "UserController@test"]);
         Route::any('uploadProfilePic', array('as' => 'uploadProfilePic', 'uses' => 'UsersController@uploadProfilePic'));
     });

@@ -23,6 +23,8 @@
             <div class="col-lg-12">
                 <form action="{{route('searchViaCategory')}}" method="get" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <?php 
+                    /*
                     @foreach(category_drop_down() as $Category)
                         <ul class="list-unstyled">
                             <li>
@@ -31,6 +33,8 @@
                             </li>
                         </ul>
                     @endforeach
+*/
+                    ?>
                     <input type="submit" value="Search">
                 </form>
             </div>

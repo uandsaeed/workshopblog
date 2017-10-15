@@ -3,9 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    
+    private $_user;
+
+    public function __construct(User $user)
+    {
+        $this->_user = $user;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +23,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $user = $this->_user->all();
+        dd($user);
     }
 
     /**
@@ -34,9 +45,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $fname = $request->get('first_name');
-        dd($request->all());
-        echo $fname;
+        // $request->get('email');
+        $formData = $request->all();
+        $formData = array_except($formData,['_token','btnSave']);
+        $formData['name'] = $formData['first_name'] . ' '. $formData['last_name'];
+        $formData['password'] =  \Hash::make($formData['password']);
+        $this->_user->saveUser($formData);
+        return redirect()->route('users.create');
     }
 
     /**

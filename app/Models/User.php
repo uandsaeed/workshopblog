@@ -59,4 +59,17 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class,'roles_users');
     }
+
+    public function saveUser(array $data){
+        
+        
+//        self::create($data);
+        
+
+        //*** Create User 
+        $this->name = $data['name'];
+        $this->email = $data['email'];
+        $this->password = $data['password'];
+        $this->save();
+    }
 }
